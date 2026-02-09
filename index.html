@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>!Happy Valentine, Bad!</title>
+    <style>
+        /* GIAO DIỆN CHÍNH */
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            cursor: pointer;
+        }
+
+        /* HỘP LỜI CHÚC */
+        .card {
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.4);
+            border: 3px solid #ff1493;
+            animation: beat 1.5s infinite;
+        }
+
+        h1 { color: #ff1493; font-size: 40px; margin: 0; }
+        p { color: #d81b60; font-size: 18px; font-weight: bold; margin-top: 15px; }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* HIỆU ỨNG TRÁI TIM */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff1493;
+            transform: rotate(-45deg);
+            bottom: -50px;
+            animation: fly 5s linear infinite;
+        }
+
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -50%; left: 0; }
+        .heart::after { left: 50%; top: 0; }
+
+        @keyframes fly {
+            0% { bottom: -50px; transform: rotate(-45deg) translateY(0); opacity: 1; }
+            100% { bottom: 110vh; transform: rotate(-45deg) translateY(-100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body onclick="playMusic()">
+
+    <audio id="loveAudio" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <h1>Happy Valentine! ❤️</h1>
+        <p id="status">Bấm vào đây ik:3</p>
+    </div>
+
+    <script>
+        // Hàm phát nhạc khi click vào bất kỳ đâu trên màn hình
+        function playMusic() {
+            var audio = document.getElementById("loveAudio");
+            audio.play();
+            document.getElementById("status").innerText = "";
+        }
+
+        // Hàm tạo trái tim bay ngẫu nhiên
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + "vw";
+            
+            const size = Math.random() * 15 + 10 + "px";
+            heart.style.width = size;
+            heart.style.height = size;
+            
+            const colors = ['#ff1493', '#ff69b4', '#ff4d4d', '#ff85a1'];
+            heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+
+</body>
+</html>
